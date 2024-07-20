@@ -3,7 +3,7 @@ import random
 import time
 
 
-def retry(autoretry_for: list[Exception], max_retries: int, retry_backoff: int, retry_backoff_max: int,
+def retry(autoretry_for: list[type[BaseException]], max_retries: int, retry_backoff: int, retry_backoff_max: int,
           retry_jitter: bool):
     def decorator(func):
         @functools.wraps(func)
@@ -12,7 +12,7 @@ def retry(autoretry_for: list[Exception], max_retries: int, retry_backoff: int, 
             while retries < max_retries:
                 try:
                     return func(*args, **kwargs)
-                except autoretry_for:
+                except tuple(autoretry_for):
                     retries += 1
                     if retries >= max_retries:
                         raise
