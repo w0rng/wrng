@@ -72,6 +72,21 @@ def my_function():
     print("Функция завершилась")
 ```
 
+### return_stub
+```python
+from wrng.decorators import return_stub
+from wrng.decorators.return_stub import ModeType
+
+@return_stub(42, mode=ModeType.Fail)
+def my_function(raise_exception=False):
+    if raise_exception:
+        raise ValueError("Произошла ошибка")
+    return 'kek'
+    
+assert my_function() == 'kek'
+assert my_function(raise_exception=True) == 42
+```
+
 ## Контекстные менеджеры
 
 ### timer
